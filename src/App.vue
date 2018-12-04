@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    Vue项目
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 
 export default {
- 
+
 }
 </script>
 
 <style>
-
+  #app{
+    height:100%;
+  }
 </style>
