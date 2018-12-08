@@ -5,7 +5,7 @@
           <el-input v-model="ruleForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="ruleForm.password"></el-input>
+          <el-input type="password" v-model="ruleForm.password"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -46,10 +46,10 @@
             return false
           };
           // console.log('登陆成功')
-          console.log(this.ruleForm)
+          // console.log(this.ruleForm)
           axios.post('http://localhost:8888/api/private/v1/login',this.ruleForm)
             .then(response=>{
-            console.log(response)
+            // console.log(response)
             if(response.data.meta.status === 200){
               localStorage.setItem('token',response.data.data.token)
               this.$router.push('home')
