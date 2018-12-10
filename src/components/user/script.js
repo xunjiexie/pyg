@@ -182,7 +182,7 @@ export default {
       // console.log(res)
       this.dialogAsign = false
       this.$message({
-        message: '角色修改成功',
+        message: res.data.meta.msg,
         type: 'success'
       })
     }

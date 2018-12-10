@@ -15,7 +15,7 @@ const router = new VueRouter({
     {path: '/home',
       component: Home,
       children: [
-        {path: '/user', component: User},
+        {path: '/users', component: User},
         {path: '/rights', component: Rights},
         {path: '/roles', component: Roles}
       ]
