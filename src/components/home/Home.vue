@@ -49,11 +49,11 @@
               <i class="el-icon-location"></i>
               <span>权限管理</span>
             </template>
-            <el-menu-item index="2-1">
+            <el-menu-item index="/roles">
               <i class="el-icon-menu"></i>
               <span slot="title">角色列表</span>
             </el-menu-item>
-            <el-menu-item index="2-2">
+            <el-menu-item index="/rights">
               <i class="el-icon-menu"></i>
               <span slot="title">权限列表</span>
             </el-menu-item>
@@ -96,7 +96,7 @@
               <span slot="title">数据报表</span>
             </el-menu-item>
           </el-submenu>
-          
+
         </el-menu>
       </el-aside>
       <el-main class="home_main">
@@ -108,8 +108,8 @@
 
 <script>
 export default {
-  methods:{
-    widthdraw(){
+  methods: {
+    widthdraw () {
       this.$confirm('您确定退出登录吗?', '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -118,20 +118,20 @@ export default {
         this.$message({
           type: 'success',
           message: '退出成功!'
-        });
-        this.$router.push('/login');
-        localStorage.removeItem('token');
+        })
+        this.$router.push('/login')
+        localStorage.removeItem('token')
       }).catch(() => {
         this.$message({
           type: 'info',
           message: '已取消退出'
-        });          
-      });
+        })
+      })
     },
-    handleOpen(key, keyPath) {
+    handleOpen (key, keyPath) {
       // console.log(key, keyPath);
     },
-    handleClose(key, keyPath) {
+    handleClose (key, keyPath) {
       // console.log(key, keyPath);
     }
   }
@@ -174,6 +174,4 @@ export default {
     color: #333;
     line-height: 60px;
   }
-  
-  
 </style>

@@ -1,0 +1,77 @@
+<div>
+  <!-- 面包屑 -->
+  <el-breadcrumb class="breadcrumbs" separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item>权限管理</el-breadcrumb-item>
+    <el-breadcrumb-item>角色列表</el-breadcrumb-item>
+  </el-breadcrumb>
+  <el-table
+    :data="rolesData"
+    stripe
+    style="width: 100%">
+    <el-table-column type="expand">
+      <template slot-scope="scope">
+        <span v-if="scope.row.children.length==0">暂无权限</span>
+        <el-row class="level1" v-for="item1 in scope.row.children" :key="item1.id">
+          <el-col :span="4">
+            <el-tag closable>{{ item1.authName }}</el-tag>
+            <i class="el-icon-arrow-right"></i>
+          </el-col>
+          <el-col :span="20">
+            <el-row class="level2" v-for="item2 in item1.children" :key="item2.id">
+              <el-col :span="4">
+                <el-tag type="success" closable>{{ item2.authName }}</el-tag>
+                <i class="el-icon-arrow-right"></i>
+              </el-col>
+              <el-col :span="20">
+                <el-col class="level3" v-for="item3 in item2.children" :span="4" :key="item3.id">
+                    <el-tag type="warning"  closable>{{ item3.authName }}</el-tag>
+                </el-col>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+      </template>
+    </el-table-column>
+    <el-table-column
+      type="index"
+      :index="indexMethod">
+    </el-table-column>
+    <el-table-column
+      prop="roleName"
+      label="角色名称"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="roleDesc"
+      label="描述"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="操作">
+      <template slot-scope="scope">
+          <el-button size="small" class="el-icon-edit" type="primary" plain></el-button size="small">
+          <el-button size="small" class="el-icon-delete" type="danger" plain></el-button size="small">
+          <el-button size="small" class="el-icon-check" type="success" plain @click="isDialogAuthorizationShow(scope.row)">分配权限</el-button size="small">
+      </template>
+    </el-table-column>
+  </el-table>
+  <!-- 分配权限模态框 -->
+  <el-dialog title="角色授权" :visible.sync="dialogAuthorization">
+    <el-tree
+      :data="authorization"
+      show-checkbox
+      node-key="id"
+      ref="tree"
+      :props="defaultProps"
+      :default-expand-all="true"
+      >
+    </el-tree>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dialogAuthorization = false">取 消</el-button>
+      <el-button type="primary" @click="assignRights">分 配</el-button>
+    </div>
+  </el-dialog>
+
+</div>

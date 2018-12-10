@@ -10,6 +10,7 @@ export default {
       // 模态框默认不显示
       dialogAddUser: false,
       dialogChangeUser: false,
+      dialogAsign: false,
       // 添加用户表单数据
       userLIstForm: {
         username: '',
@@ -40,7 +41,7 @@ export default {
         username: '',
         email: '',
         mobile: '',
-        id: ''
+        id: -1
       },
       // 修改用户信息校验规则
       changeUserRules: {
@@ -50,7 +51,15 @@ export default {
         mobile: [
           { pattern: /^1[3|4|5|8]\d{9}$/, message: '手机格式不正确', trigger: 'blur' }
         ]
-      }
+      },
+      // 分配权限用户数据
+      asignForm: {
+        username: '',
+        role_name: '',
+        role_id: '',
+        id: ''
+      },
+      role_name_list: []
     }
   },
   methods: {
@@ -148,9 +157,38 @@ export default {
         message: res.data.meta.msg,
         type: 'success'
       })
+    },
+    // 分配角色对话框显示
+    async asignShow (currentInfo) {
+      // console.log(currentInfo)
+      this.dialogAsign = true
+      this.asignForm.username = currentInfo.username
+      this.asignForm.id = currentInfo.id
+      const res = await this.$http.get(`/users/${currentInfo.id}`)
+      // console.log(res)
+      this.asignForm.role_id = res.data.data.rid === -1 ? '' : res.data.data.rid
+    },
+    // 获取角色列表
+    async getRoles () {
+      const res = await this.$http.get('/roles')
+      this.role_name_list = res.data.data
+      // console.log(res, this.role_name_list)
+    },
+    // 分配角色
+    async asignRole () {
+      const res = await this.$http.put(`/users/${this.asignForm.id}/role`, {
+        rid: this.asignForm.role_id
+      })
+      // console.log(res)
+      this.dialogAsign = false
+      this.$message({
+        message: '角色修改成功',
+        type: 'success'
+      })
     }
   },
   created () {
     this.renderPage()
+    this.getRoles()
   }
 }
