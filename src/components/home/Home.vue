@@ -36,7 +36,7 @@
           :router="true">
           <el-submenu
              v-for="item in menu"
-            index="item.id"
+            :index="item.id+''"
             :key="item.id">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -96,7 +96,7 @@ export default {
     // 动态获取左侧菜单栏
     async getMenus () {
       const res = await this.$http.get('/menus')
-      console.log('menus', res)
+      // console.log('menus', res)
       this.menu = res.data.data
     }
   },
